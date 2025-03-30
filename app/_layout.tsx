@@ -1,32 +1,37 @@
 import * as SplashScreen from "expo-splash-screen";
-import { useFonts } from "expo-font";
-
-import LoginMain from "@/src/components/loginMainComponents/LoginMain";
 import { SafeAreaView, StyleSheet } from "react-native";
+import LoginAndSignUpMain from "@/src/components/LoginAndSignUpComponents/LoginAndSignUpMain/LoginAndSignUpMain";
+import { createStackNavigator } from "@react-navigation/stack";
+import LoginMain from "@/src/components/loginMainComponents/LoginMain";
+import SignUp from "@/src/components/signUpComponents/signUpMain/signUp";
 import { useEffect } from "react";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+export type RootStackParamList = {
+  Home: undefined;
+  Login: undefined;
+  SignUp: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
+
 export default function RootLayout() {
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
-
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    async function hideSplashScreen() {
+      await SplashScreen.hideAsync();
     }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+    hideSplashScreen();
+  }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <LoginMain />
-    </SafeAreaView>
+    // <SafeAreaView style={styles.container}></SafeAreaView>
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={LoginAndSignUpMain} options={{ headerShown: false }} />
+      <Stack.Screen name="Login" component={LoginMain} options={{ headerShown: false }} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+      {/* <LoginAndSignUpMain /> */}
+    </Stack.Navigator>
   );
 }
 

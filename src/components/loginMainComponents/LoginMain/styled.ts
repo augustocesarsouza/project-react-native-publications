@@ -2,6 +2,20 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   containerMain: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: "100%",
+  },
+
+  containerArrowLeft: {
+    width: "100%",
+    marginTop: 20,
+    marginBottom: 100
+  },
+
+  container: {
     alignItems: "center",
     width: "75%",
     height: "70%",
