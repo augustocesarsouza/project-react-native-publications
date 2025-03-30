@@ -3,12 +3,14 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   containerMain: {
     alignItems: "center",
-    width: "100%"
+    width: "75%",
+    height: "70%",
+    justifyContent: "flex-start",
   },
 
-  containerIconBodyUser: {
-    width: "100%",
-    alignItems: "center",
+  containerIconUserAndTextLogin: {
+    gap: 20,
+    marginBottom: 20,
   },
 
   headerLogin: {
@@ -21,27 +23,30 @@ export const styles = StyleSheet.create({
   formMain: {
     width: "100%",
     alignItems: "center",
-    position: "relative"
+    marginBottom: 30
   },
 
   form: {
     width: "100%",
     height: "auto",
-    marginTop: 30,
+    gap: 5
+  },
+
+  containerTextAndInputEmailAndPassword: {
+    width: "100%",
+    height: "auto",
     padding: 10,
+    position: "relative"
   },
 
   labelEmail: {
     color: "#000000",
-    // fontSize: 14,
     fontSize: 16,
     fontWeight: "500",
     position: "absolute",
     left: 25,
-    // top: 0,
     top: 23,
     backgroundColor: "#fff",
-    // backgroundColor: "red",
     zIndex: 5,
     paddingLeft: 3,
     paddingRight: 3,
@@ -53,11 +58,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     position: "absolute",
-    left: 25,
-    // top: 60,
+    left: 20,
     top: 84,
     backgroundColor: "#fff",
-    // backgroundColor: "red",
     zIndex: 5,
     paddingLeft: 3,
     paddingRight: 3,
@@ -65,13 +68,13 @@ export const styles = StyleSheet.create({
   },
   
   input: {
-    width: "100%", // Faz os inputs ocuparem toda a largura
-    height: 50, // Altura fixa para os inputs
+    width: "100%",
+    height: 50,
     borderWidth: 1,
     borderColor: "gray",
     padding: 10,
-    marginBottom: 10,
     borderRadius: 5,
+    paddingLeft: 15
   },
 
   errorMessage: {
@@ -81,18 +84,41 @@ export const styles = StyleSheet.create({
     paddingLeft: 7
   },
 
+  containerInfoAndButton: {
+    width: "100%",
+    alignItems: "center",
+  },
+
+  textForgotPassword: {
+    width: "100%",
+    fontWeight: "500",
+    textAlign: "right",
+    paddingRight: 10
+  },
+
   buttonLogin: {
-    borderRadius: 50,
+    borderRadius: 10,
     alignContent: "center",
     justifyContent: "center",
-    width: "70%",
-    backgroundColor: "red",
+    width: "100%",
+    backgroundColor: "#318CE7",
     padding: 10,
+    marginBottom: 15
   },
 
   textButtonLogin: {
     fontSize: 20,
+    fontWeight: "500",
     color: "#ffffff",
     textAlign: "center",
+  },
+  
+  textYouDontHaveAccount: {
+    textAlign: "center",
+    fontWeight: "500"
+  },
+  
+  textBlueLink: {
+    color: "#318CE7"
   },
 });
