@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
   },
 
   labelEmail: {
-    color: "#000000",
+    color: "#979797",
     fontSize: 16,
     fontWeight: "500",
     position: "absolute",
@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
   },
 
   labelPassword: {
-    color: "#000000",
+    color: "#979797",
     fontSize: 16,
     fontWeight: "500",
     position: "absolute",

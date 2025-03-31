@@ -90,10 +90,7 @@ export default function LoginMain({ navigation }: LoginMainProps) {
     }
   };
 
-  const validationImg = () => {
-    // validar email and password
-    console.log("asd");
-  };
+  const onPressLogin = () => {};
 
   return (
     <Pressable onPress={Keyboard.dismiss} style={styles.containerMain}>
@@ -155,7 +152,7 @@ export default function LoginMain({ navigation }: LoginMainProps) {
         </View>
 
         <View style={styles.containerInfoAndButton}>
-          <TouchableOpacity style={styles.buttonLogin} onPress={() => validationImg()}>
+          <TouchableOpacity style={styles.buttonLogin} onPress={() => onPressLogin()}>
             <Text style={styles.textButtonLogin}>Login</Text>
           </TouchableOpacity>
 
