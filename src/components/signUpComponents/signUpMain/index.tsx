@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { RootStackParamList } from "@/app/_layout";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { User } from "../../interface/domain/User";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 enum AllTheInputs {
   InputName = "inputName",
@@ -99,22 +101,71 @@ export default function SignUp({ navigation }: SignUpProps) {
   const [errorPasswordIsNull, setErrorPasswordIsNull] = useState(false);
 
   const signUp = () => {
+    let nameIsValid = false;
+    let emailIsValid = false;
+    let passwordIsValid = false;
+
     if (!name) {
       setErrorNameIsNull(true);
 
       putValueInputAndText(nameInputRef, nameTextRef, "red");
+      nameIsValid = false;
+    } else {
+      nameIsValid = true;
     }
 
     if (!email) {
       setErrorEmailIsNull(true);
 
       putValueInputAndText(emailInputRef, emailTextRef, "red");
+      emailIsValid = false;
+    } else {
+      emailIsValid = true;
     }
 
     if (!password) {
       setErrorPasswordIsNull(true);
 
       putValueInputAndText(passwordInputRef, passwordTextRef, "red");
+      passwordIsValid = false;
+    } else {
+      passwordIsValid = true;
+    }
+
+    if (nameIsValid && emailIsValid && passwordIsValid) {
+      const obj = {
+        name,
+        email,
+        password,
+        base64ImageUser: null,
+      };
+
+      fetch("http://192.168.18.21:8080/v1/public/user/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(obj),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const result = data;
+          const user = result.data;
+
+          putUserStorage(user);
+
+          navigation.navigate("Home");
+        })
+        .catch((err) => console.error(err));
+    }
+  };
+
+  const putUserStorage = async (user: User) => {
+    try {
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+      console.log("Usuário salvo!");
+    } catch (error) {
+      console.error("Erro ao salvar usuário:", error);
     }
   };
 

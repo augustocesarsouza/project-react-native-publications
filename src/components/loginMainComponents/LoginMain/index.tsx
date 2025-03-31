@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/app/_layout";
+import { User } from "../../interface/domain/User";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface LoginMainProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
@@ -90,7 +92,31 @@ export default function LoginMain({ navigation }: LoginMainProps) {
     }
   };
 
-  const onPressLogin = () => {};
+  const onPressLogin = async () => {
+    fetch(`http://192.168.18.21:8080/v1/public/user/login/${email}/${password}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const result = data;
+        const resultFinal = result.data;
+
+        const user = resultFinal["userDTO"];
+
+        putUserStorage(user);
+
+        navigation.navigate("Home");
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const putUserStorage = async (user: User) => {
+    try {
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+
+      navigation.navigate("Home");
+    } catch (error) {
+      console.error("Erro ao salvar usuário:", error);
+    }
+  };
 
   return (
     <Pressable onPress={Keyboard.dismiss} style={styles.containerMain}>
@@ -100,7 +126,7 @@ export default function LoginMain({ navigation }: LoginMainProps) {
           size={15}
           color="black"
           style={styles.containerArrowLeft}
-          onPress={() => navigation.navigate("Home", undefined)}
+          onPress={() => navigation.navigate("LoginAndSignUp", undefined)}
         />
         <View style={styles.containerIconUserAndTextLogin}>
           <FontAwesome name="user-circle" size={75} color="black" />
