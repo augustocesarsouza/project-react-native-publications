@@ -29,7 +29,7 @@ export default function RootLayout() {
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={LoginAndSignUpMain} options={{ headerShown: false }} />
       <Stack.Screen name="Login" component={LoginMain} options={{ headerShown: false }} />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
       {/* <LoginAndSignUpMain /> */}
     </Stack.Navigator>
   );

@@ -8,16 +8,22 @@ interface LoginAndSignUpMainProps {
 }
 
 export default function LoginAndSignUpMain({ navigation }: LoginAndSignUpMainProps) {
-  const login = () => {};
+  const login = () => {
+    navigation.navigate("Login", undefined);
+  };
 
-  const register = () => {};
+  const register = () => {
+    navigation.navigate("SignUp", undefined);
+  };
 
   return (
     <View style={styles.containerMain}>
       <View style={styles.container}>
-        <Image source={require("../../img/logo.png")} style={styles.reactLogo} />
+        <View style={styles.containerImgLogoAndText}>
+          <Image source={require("../../img/logo.png")} style={styles.reactLogo} />
 
-        <Text style={styles.textPublic}>Publications</Text>
+          <Text style={styles.textPublic}>Publications</Text>
+        </View>
 
         <View style={styles.containerTextLogin}>
           <Text style={styles.textLoginOrRegister}>Bem-vindo!</Text>
@@ -25,17 +31,11 @@ export default function LoginAndSignUpMain({ navigation }: LoginAndSignUpMainPro
         </View>
 
         <View style={styles.containerButtonLoginOrSignUp}>
-          <TouchableOpacity
-            style={styles.buttonLogin}
-            onPress={() => navigation.navigate("Login", undefined)}
-          >
+          <TouchableOpacity style={styles.buttonLogin} onPress={login}>
             <Text style={styles.textButtonLogin}>Login</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.buttonSignUp}
-            onPress={() => navigation.navigate("SignUp", undefined)}
-          >
+          <TouchableOpacity style={styles.buttonSignUp} onPress={register}>
             <Text style={styles.textButtonRegister}>Register</Text>
           </TouchableOpacity>
         </View>

@@ -96,7 +96,7 @@ export default function LoginMain({ navigation }: LoginMainProps) {
   };
 
   return (
-    <View style={styles.containerMain}>
+    <Pressable onPress={Keyboard.dismiss} style={styles.containerMain}>
       <View style={styles.container}>
         <FontAwesome
           name="arrow-left"
@@ -110,7 +110,7 @@ export default function LoginMain({ navigation }: LoginMainProps) {
           <Text style={styles.headerLogin}>Login</Text>
         </View>
 
-        <Pressable onPress={Keyboard.dismiss} style={styles.formMain}>
+        <View style={styles.formMain}>
           <View style={styles.form}>
             <View style={styles.containerTextAndInputEmailAndPassword}>
               <Animated.Text
@@ -152,7 +152,7 @@ export default function LoginMain({ navigation }: LoginMainProps) {
             </View>
           </View>
           <Text style={styles.textForgotPassword}>Esqueceu a senha?</Text>
-        </Pressable>
+        </View>
 
         <View style={styles.containerInfoAndButton}>
           <TouchableOpacity style={styles.buttonLogin} onPress={() => validationImg()}>
@@ -167,6 +167,6 @@ export default function LoginMain({ navigation }: LoginMainProps) {
           </Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }

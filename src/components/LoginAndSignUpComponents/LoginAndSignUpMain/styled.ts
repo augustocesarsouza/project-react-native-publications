@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   containerMain: {
-    flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    width: "100%"
   },
 
   container: {
@@ -13,6 +13,13 @@ export const styles = StyleSheet.create({
     width: "75%",
     height: "70%",
     justifyContent: "flex-start",
+  },
+
+  containerImgLogoAndText: {
+    width: "100%",
+    alignItems: "center",
+    gap: 15,
+    marginBottom: 20
   },
 
   reactLogo: {
@@ -23,10 +30,12 @@ export const styles = StyleSheet.create({
   textPublic: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "#600ee6"
   },
 
   containerTextLogin: {
-    width: "100%"
+    width: "100%",
+    marginBottom: 25
   },
   
   textLoginOrRegister: {

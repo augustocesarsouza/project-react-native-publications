@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  containerPressable: {
+    width: "100%",
+  },
+
   containerMain: {
     flex: 1,
     backgroundColor: "#fff",
