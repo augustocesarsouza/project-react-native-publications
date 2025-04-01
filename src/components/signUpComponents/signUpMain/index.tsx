@@ -99,40 +99,62 @@ export default function SignUp({ navigation }: SignUpProps) {
   const [errorNameIsNull, setErrorNameIsNull] = useState(false);
   const [errorEmailIsNull, setErrorEmailIsNull] = useState(false);
   const [errorPasswordIsNull, setErrorPasswordIsNull] = useState(false);
+  const [alreadyClickLogin, setAlreadyClickLogin] = useState(false);
 
   const signUp = () => {
+    setAlreadyClickLogin(true);
+
     let nameIsValid = false;
     let emailIsValid = false;
     let passwordIsValid = false;
 
     if (!name) {
       setErrorNameIsNull(true);
-
       putValueInputAndText(nameInputRef, nameTextRef, "red");
       nameIsValid = false;
     } else {
-      nameIsValid = true;
+      if (name.length < 3) {
+        nameIsValid = false;
+        putValueInputAndText(nameInputRef, nameTextRef, "red");
+        setErrorNameIsNull(true);
+      } else {
+        nameIsValid = true;
+        putValueInputAndText(nameInputRef, nameTextRef, "#979797");
+        setErrorNameIsNull(false);
+      }
     }
 
     if (!email) {
       setErrorEmailIsNull(true);
-
       putValueInputAndText(emailInputRef, emailTextRef, "red");
       emailIsValid = false;
     } else {
-      emailIsValid = true;
+      if (!email.includes("@gmail")) {
+        emailIsValid = false;
+        putValueInputAndText(emailInputRef, emailTextRef, "red");
+        setErrorEmailIsNull(true);
+      } else {
+        emailIsValid = true;
+        putValueInputAndText(emailInputRef, emailTextRef, "#979797");
+        setErrorEmailIsNull(false);
+      }
     }
 
     if (!password) {
       setErrorPasswordIsNull(true);
-
       putValueInputAndText(passwordInputRef, passwordTextRef, "red");
       passwordIsValid = false;
     } else {
-      passwordIsValid = true;
+      if (password.length < 8) {
+        passwordIsValid = false;
+        putValueInputAndText(passwordInputRef, passwordTextRef, "red");
+        setErrorPasswordIsNull(true);
+      } else {
+        passwordIsValid = true;
+        putValueInputAndText(passwordInputRef, passwordTextRef, "#979797");
+        setErrorPasswordIsNull(false);
+      }
     }
-    // ARRUMAR ISSO TER QUE TER MAIS DE "3" CARACTER NO NAME, O EMAIL TER "@" E A SENHA TER PELOMENOS 8 CARACTEER
-    // AMANHA COLOCAR O BACKEND NO GITHUB COLOCAR LÁ E VERIFICAR O src/main/resources/application-local.properties tem que funciona
 
     if (nameIsValid && emailIsValid && passwordIsValid) {
       const obj = {
@@ -149,14 +171,40 @@ export default function SignUp({ navigation }: SignUpProps) {
         },
         body: JSON.stringify(obj),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          const result = data;
-          const user = result.data;
+        .then(async (res) => {
+          if (res.status === 400) {
+            const result = await res.json();
+            const errors = result.errors;
 
-          putUserStorage(user);
+            for (let i = 0; i < errors.length; i++) {
+              const el = errors[i];
 
-          navigation.navigate("Home");
+              if (el.field === "Name") {
+                setErrorNameIsNull(true);
+                putValueInputAndText(nameInputRef, nameTextRef, "red");
+              }
+
+              if (el.field === "Email") {
+                setErrorEmailIsNull(true);
+                putValueInputAndText(emailInputRef, emailTextRef, "red");
+              }
+
+              if (el.field === "Password") {
+                setErrorPasswordIsNull(true);
+                putValueInputAndText(passwordInputRef, passwordTextRef, "red");
+              }
+            }
+          }
+
+          if (res.status === 200) {
+            const data = await res.json();
+
+            const result = data;
+            const user = result.data;
+
+            putUserStorage(user);
+            navigation.navigate("Home");
+          }
         })
         .catch((err) => console.error(err));
     }
@@ -172,22 +220,45 @@ export default function SignUp({ navigation }: SignUpProps) {
   };
 
   useEffect(() => {
-    if (name) {
-      setErrorNameIsNull(false);
+    if (!alreadyClickLogin) return;
 
-      putValueInputAndText(nameInputRef, nameTextRef, "#979797");
+    if (!name) {
+      setErrorNameIsNull(true);
+      putValueInputAndText(nameInputRef, nameTextRef, "red");
+    } else {
+      if (name.length < 3) {
+        setErrorNameIsNull(true);
+        putValueInputAndText(nameInputRef, nameTextRef, "red");
+      } else {
+        setErrorNameIsNull(false);
+        putValueInputAndText(nameInputRef, nameTextRef, "#979797");
+      }
     }
 
-    if (email) {
-      setErrorEmailIsNull(false);
-
-      putValueInputAndText(emailInputRef, emailTextRef, "#979797");
+    if (!email) {
+      setErrorEmailIsNull(true);
+      putValueInputAndText(emailInputRef, emailTextRef, "red");
+    } else {
+      if (!email.includes("@gmail")) {
+        setErrorEmailIsNull(true);
+        putValueInputAndText(emailInputRef, emailTextRef, "red");
+      } else {
+        setErrorEmailIsNull(false);
+        putValueInputAndText(emailInputRef, emailTextRef, "#979797");
+      }
     }
 
-    if (password) {
-      setErrorPasswordIsNull(false);
-
-      putValueInputAndText(passwordInputRef, passwordTextRef, "#979797");
+    if (!password) {
+      setErrorPasswordIsNull(true);
+      putValueInputAndText(passwordInputRef, passwordTextRef, "red");
+    } else {
+      if (password.length < 8) {
+        setErrorPasswordIsNull(true);
+        putValueInputAndText(passwordInputRef, passwordTextRef, "red");
+      } else {
+        setErrorPasswordIsNull(false);
+        putValueInputAndText(passwordInputRef, passwordTextRef, "#979797");
+      }
     }
   }, [name, email, password]);
 
@@ -250,7 +321,7 @@ export default function SignUp({ navigation }: SignUpProps) {
               ref={nameInputRef}
             />
             {errorNameIsNull && (
-              <Text style={styles.textErrorMessage}>Nome do usuario não pode ser vazio</Text>
+              <Text style={styles.textErrorMessage}>Nome do usuario deve conter pelo menos 3 caracteres</Text>
             )}
           </View>
           <View style={styles.containerTextAndInputEmailAndPassword}>
@@ -271,9 +342,7 @@ export default function SignUp({ navigation }: SignUpProps) {
               onBlur={() => onBlurAll(labelTopEmail, labelFontSizeEmail, AllTheInputs.InputEmail)}
               ref={emailInputRef}
             ></TextInput>
-            {errorEmailIsNull && (
-              <Text style={styles.textErrorMessage}>Email do usuario não pode ser vazio</Text>
-            )}
+            {errorEmailIsNull && <Text style={styles.textErrorMessage}>O Email tem que conter "@gmail"</Text>}
           </View>
           <View style={styles.containerTextAndInputEmailAndPassword}>
             <Animated.Text
@@ -320,7 +389,7 @@ export default function SignUp({ navigation }: SignUpProps) {
               )}
             </View>
             {errorPasswordIsNull && (
-              <Text style={styles.textErrorMessage}>Password do usuario não pode ser vazio</Text>
+              <Text style={styles.textErrorMessage}>Senha deve ter pelo menos 8 caracteres</Text>
             )}
           </View>
         </View>
