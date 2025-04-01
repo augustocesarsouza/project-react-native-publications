@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
   },
 
   containerIconUserAndTextLogin: {
+    alignItems: "center",
     gap: 20,
     marginBottom: 20,
   },
@@ -36,6 +37,13 @@ export const styles = StyleSheet.create({
     fontWeight: "900",
     color: "#000",
     textAlign: "center",
+  },
+
+  textEmailOrPasswordIncorrect: {
+    fontSize: 12,
+    color: "red",
+    marginBottom: 10,
+    fontWeight: "500",
   },
 
   formMain: {
@@ -93,6 +101,18 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     paddingLeft: 15
+  },
+
+  containerInputPasswordAndEyes: {
+    width: "100%",
+    position: "relative",
+  },
+
+  containerEyeOpenClose: {
+    width: 20,
+    position: "absolute",
+    right: 15,
+    bottom: 15
   },
 
   errorMessage: {

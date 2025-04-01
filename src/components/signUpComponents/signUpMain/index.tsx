@@ -131,6 +131,8 @@ export default function SignUp({ navigation }: SignUpProps) {
     } else {
       passwordIsValid = true;
     }
+    // ARRUMAR ISSO TER QUE TER MAIS DE "3" CARACTER NO NAME, O EMAIL TER "@" E A SENHA TER PELOMENOS 8 CARACTEER
+    // AMANHA COLOCAR O BACKEND NO GITHUB COLOCAR LÁ E VERIFICAR O src/main/resources/application-local.properties tem que funciona
 
     if (nameIsValid && emailIsValid && passwordIsValid) {
       const obj = {
