@@ -1,39 +1,48 @@
 import * as SplashScreen from "expo-splash-screen";
-import { useFonts } from "expo-font";
-
-import LoginMain from "@/src/components/loginMainComponents/LoginMain";
 import { SafeAreaView, StyleSheet } from "react-native";
+import LoginAndSignUpMain from "@/src/components/LoginAndSignUpComponents/LoginAndSignUpMain/LoginAndSignUpMain";
+import { createStackNavigator } from "@react-navigation/stack";
+import LoginMain from "@/src/components/loginMainComponents/LoginMain";
 import { useEffect } from "react";
+import HomeMain from "@/src/components/HomeComponents/HomeMain/HomeMain";
+import SignUp from "@/src/components/signUpComponents/signUpMain";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+export type RootStackParamList = {
+  LoginAndSignUp: undefined;
+  Login: undefined;
+  SignUp: undefined;
+  Home: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
+
 export default function RootLayout() {
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
-
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    async function hideSplashScreen() {
+      await SplashScreen.hideAsync();
     }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+    hideSplashScreen();
+  }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <LoginMain />
-    </SafeAreaView>
+    // <SafeAreaView style={styles.container}></SafeAreaView>
+    <Stack.Navigator initialRouteName="LoginAndSignUp">
+      <Stack.Screen name="LoginAndSignUp" component={LoginAndSignUpMain} options={{ headerShown: false }} />
+      <Stack.Screen name="Login" component={LoginMain} options={{ headerShown: false }} />
+      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
+      <Stack.Screen name="Home" component={HomeMain} options={{ headerShown: false }} />
+      {/* <LoginAndSignUpMain /> */}
+    </Stack.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
+    backgroundColor: "#fff",
     alignItems: "center",
+    justifyContent: "center",
   },
 });
