@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
 
   imgUser: {
     width: 25,
-    height: 25
+    height: 25,
   },
 
   containerNavigationPublication: {
@@ -61,11 +61,65 @@ export const styles = StyleSheet.create({
     width: "0%",
     height: "100%",
     zIndex: 1000,
-    backgroundColor: "red"
+    backgroundColor: "#000",
+    paddingTop: 30,
+    paddingLeft: 20,
+  },
+
+  containerImgNameAndDellipsis: {
+    flexDirection: "row",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+
+  containerImgUserAndName: {
+    width: "80%",
+    marginBottom: 20
+  },
+
+  imgUserAfterClicked: {
+    width: 35,
+    height: 35,
+    objectFit: "contain",
+    borderRadius: 50,
+    marginBottom: 5
   },
 
   textInnerClickedByUser: {
     color: "#ffffff",
+    fontWeight: "800"
+  },
+
+  containerSvgEllipsis: {
+    width: 20,
+    height: 20,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  containerNaveAfterClickedImgUser: {
+    // marginTop: 20,
+    // marginLeft: 10,
+    gap: 18
+  },
+
+  containerSvgAndTextNave: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+
+  svgNave: {
+    marginRight: 18
+  },
+
+  textNaveAfterClicked: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "800",
   },
 
   containerClickedByUserSecond: {
